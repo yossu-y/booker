@@ -34,6 +34,17 @@ class BooksController < ApplicationController
       render :index
     end
   end
+  
+  def update
+    @book = Book.find(params[:id])
+    @book.user.id = current_user.id
+    if @book.update(book_params)
+      flash[:notice]="You have updated book successfully."
+      redirect_to :edit
+    else
+      render :edit
+    end
+  end
 
   def destroy
     @book = Book,find(params[:id])
